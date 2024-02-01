@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Special</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Englebert&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datepicker-js">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <div class="container" id='main'>
+        <h1>Do You Wanna go out with me ?</h1>
+        <div class="button">
+            <button class="yes_button">Yes</button>
+            <button class="no_button">No</button>
+        </div>
+        <div class="error">
+            <p>Please say yes!</p>
+        </div>
+        <img src="Tir.gif" alt="">
+    </div>
+
+    <div class="container" id='success' style="display: none;">
+        <h1>Do You Wanna go out with me ?</h1>
+        <div class="success">
+            <h2>Yeah! Finally!</h2>
+            <input class="fix" id="datepicker" value="Fix a Date">
+            <div class="selected-date-container">
+                <!-- <p>Selected Date: <span class="selected-date"></span></p> -->
+                <!-- <p>Date: <input type="text" id="datepicker"></p> -->
+            </div>
+        </div>
+        <img src="Hug.gif" alt="">
+    </div>
+
+    <div class="copyright">&copy; Anish Chowdhury, 2024</div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(251, 220, 249);
+        }
+
+        .container {
+            padding: 32px;
+            background-color: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+
+            margin-bottom: 20px;
+        }
+
+        .success {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Englebert', cursive;
+            color: black;
+            font-size: 24px;
+        }
+
+        h2 {
+            font-family: 'Englebert', cursive;
+            color: green;
+            font-size: 20px;
+        }
+
+        .button {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .yes_button {
+            background-color: green;
+            left: 0;
+            position: absolute;
+        }
+
+        .no_button {
+            background-color: red;
+            right: 0;
+            z-index: 5;
+            position: absolute;
+            transition: transform 1s ease;
+        }
+
+        .fix {
+            background-color: rgb(9, 166, 245);
+            width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            color: white;
+            font-family: 'Englebert', cursive;
+            font-size: 18px;
+
+            text-align: center;
+        }
+
+        .error {
+            display: none;
+        }
+
+        p {
+            margin-block-start: 0px !important;
+            margin-block-end: 0px !important;
+            color: rgb(255, 0, 0);
+            font-family: 'Englebert', cursive;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            color: white;
+            font-family: 'Englebert', cursive;
+            font-size: 18px;
+        }
+
+        img {
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+        }
+
+        .ui-datepicker {
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            background: #f9e7eaa3;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-family: 'Englebert', cursive;
+            color: #ff3052;
+        }
+
+        .ui-datepicker-header {
+            background: #ff9bab;
+        }
+
+
+        .ui-state-highlight {
+            border: 1px solid #ff3052 !important;
+            background: #ff9bab !important;
+            color: #fff !important;
+        }
+
+        .ui-state-default {
+            color: #ff3052 !important;
+        }
+
+        .copyright {
+            text-align: center;
+            bottom: 10px;
+            position: absolute;
+
+            font-family: 'Englebert', cursive;
+            color: #fe5fc4a4;
+
+        }
+    </style>
+
+    <script>
+
+        function getRandomPosition() {
+            const windowHeight = $(window).height();
+            const windowWidth = $(window).width();
+            const buttonHeight = $('.no_button').outerHeight();
+            const buttonWidth = $('.no_button').outerWidth();
+
+            const randomTop = (Math.floor(Math.random() * (windowHeight - buttonHeight))) / 2;
+            const randomLeft = (Math.floor(Math.random() * (windowWidth - buttonWidth))) / 2;
+
+            return { top: randomTop, left: randomLeft };
+        }
+
+        $('.no_button').on('click', function () {
+            const position = getRandomPosition();
+            console.log(position.top);
+            console.log(position.left);
+
+            $(this).animate({
+                top: position.top,
+                left: position.left
+            }, 300, function () {
+                // Animation complete, display error message
+                $('.error').fadeIn();
+            });
+        });
+
+
+        $('.yes_button').on("click", function () {
+            $("#main").css('display', 'none');
+            $("#success").css('display', 'flex');
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'dd-mm-yy', // Set your desired date format
+            });
+        });
+
+    </script>
+</body>
+
+</html>
